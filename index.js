@@ -1,11 +1,20 @@
-//arrays, objetos
 let meta = {
     value: 'estudar todo dia',//value do meta;
     checked: false,
-    log: (info) => {//método
-        console.log(info)
-    }
+   
 }
+
+let metas = [
+    meta, 
+    {
+        value: 'caminhar',
+        checked: true
+    }
+]
+console.log(metas[1].value)
+//pegou o value de outro objeto dentro da variavel metas;
+
+/*
 meta.value = 'Não é mais estudar todo dia'
 meta.log(meta.value);
 //pega o objeto(meta) busca a propriedade chamada(log) no metodo é passado o argumento 
@@ -15,3 +24,4 @@ meta.log(meta.value);
 const criarMeta = () => {
 
 }
+    */
