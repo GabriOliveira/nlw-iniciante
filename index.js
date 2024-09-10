@@ -1,4 +1,4 @@
-let meta = {
+/*let meta = {
     value: 'estudar todo dia',//value do meta;
     checked: false,
    
@@ -13,7 +13,7 @@ let metas = [
 ]
 console.log(metas[1].value)
 //pegou o value de outro objeto dentro da variavel metas;
-
+*/
 /*
 meta.value = 'Não é mais estudar todo dia'
 meta.log(meta.value);
@@ -25,3 +25,47 @@ const criarMeta = () => {
 
 }
     */
+/*
+const start = () => {
+    //While => enquanto a condição for verdadeira ele executará tal trecho dado no executar
+ /*let count = 0;
+    while(count <= 10){
+    console.log(count)
+    count++
+ }
+}
+
+start();
+
+*/
+
+const start = () => {
+    while(true){
+    let opcao = 'cadastrar';
+    switch (opcao) {
+        case 'cadastrar':
+            console.log("vamos cadastrar");
+            break;
+       case 'listar':
+                console.log("vamos listar");
+                break;
+        case 'sair':
+            return;
+    }
+}
+}
+
+start();
+
+
+
+
+
+
+
+
+
+
+
+
+
