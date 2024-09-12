@@ -38,107 +38,115 @@ const start = () => {
 start();
 
 */
-const { select, input, checkbox } = require('@inquirer/prompts');
+const { select, input, checkbox } = require("@inquirer/prompts");
 
 let meta = {
-    value : 'tomar 2 litros de água diariamente',
-    checked : false
-}
+  value: "tomar 2 litros de água diariamente",
+  checked: false,
+};
 
-let metas = [ meta ];
+let metas = [meta];
 
 const cadastrarMeta = async () => {
-    const meta = await input({message: "Digite a meta: "});
+  const meta = await input({ message: "Digite a meta: " });
 
-
-    if (meta.length == 0) {
-        console.log('A meta está vazia');
-        return ;
-        
-    }
-    metas.push({
-        value: meta, checked: false
-
-    })
-}
+  if (meta.length == 0) {
+    console.log("A meta está vazia");
+    return;
+  }
+  metas.push({
+    value: meta,
+    checked: false,
+  });
+};
 
 const listarMetas = async () => {
-    const respostas = await checkbox({
-        message: 'use as setas para mudar de meta, espaço para selecionar, e enter para finalizar',
-        choices: [...metas],
-        instructions: false
-    })
+  const respostas = await checkbox({
+    message:
+      "use as setas para mudar de meta, espaço para selecionar, e enter para finalizar",
+    choices: [...metas],
+    instructions: false,
+  });
 
-    if(respostas.length == 0){
-        console.log('nenhuma meta selecionada');
-        
-        return;
-    }
+  if (respostas.length == 0) {
+    console.log("nenhuma meta selecionada");
 
-    metas.forEach((m) => {
-        m.checked = false;
-    })
+    return;
+  }
 
-    //ForEach => para cada
-    respostas.forEach((resposta) => {
-        const meta = metas.find((m) => {
-            return m.value == resposta
-        })
-        meta.checked = true;
+  metas.forEach((m) => {
+    m.checked = false;
+  });
+
+  //ForEach => para cada
+  respostas.forEach((resposta) => {
+    const meta = metas.find((m) => {
+      return m.value == resposta;
+    });
+    meta.checked = true;
+  });
+
+  console.log("Meta(as) Marcadas como Concluídas!!");
+};
+
+const metasRealizadas = async () => {
+    //sempre que o execute for verdadeiro...pegara a meta e coloca em uma nova lista
+    const realizadas = metas.filter((meta) => {
+        return meta.checked;
     });
 
-    console.log('Meta(as) Marcadas como Concluídas!!');
-
+    if (realizadas.length == 0) {
+        console.log('Não existem metas realizadas');
+        return;
+    }
+    await select({
+        message: "Metas Realizadas",
+        choices: [...realizadas]
+    })
+    console.log(realizadas);
+    
 }
 
 const start = async () => {
-    while(true){
+  while (true) {
+    const opcao = await select({
+      message: "Menu >",
+      choices: [
+        {
+          name: "Cadastrar meta",
+          value: "cadastrar",
+        },
+        {
+          name: "Listar metas",
+          value: "listar",
+        },
+        {
+            name: "Metas realizadas",
+            value: "realizadas",
+          },
+        {
+          name: "Sair",
+          value: "sair",
+        },
+      ],
+    });
 
-        const opcao = await select({
-            message: "Menu >",
-            choices: [
-                {
-                    name: "Cadastrar meta",
-                    value: "cadastrar"
-                },
-                {
-                    name: "Listar metas",
-                    value: "listar"
-                },
-                {
-                    name: "Sair",
-                    value: "sair"
-                }
-            ]
-        })
-
-
-        switch (opcao) {
-        case 'cadastrar':
-           await cadastrarMeta();
-           console.log(meta);
+    switch (opcao) {
+      case "cadastrar":
+        await cadastrarMeta();
+        console.log(meta);
         break;
-       case 'listar':
-            await listarMetas();
-       break;
-        case 'sair':
-            console.log("Até a próxima!!");
-            return;
+      case "listar":
+        await listarMetas();
+        break;
+      case "realizadas" :
+        await metasRealizadas();
+        break;
+      case "sair":
+        console.log("Até a próxima!!");
+        return;
     }
-}
-}
+  }
+};
 
 start();
-
-
-
-
-
-
-
-
-
-
-
-
-
