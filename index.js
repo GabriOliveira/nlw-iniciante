@@ -100,7 +100,7 @@ const metasRealizadas = async () => {
     return;
   }
   await select({
-    message: "Metas Realizadas" + realizadas.length,
+    message: "Metas Realizadas: " + realizadas.length,
     choices: [...realizadas],
   });
 };
@@ -117,9 +117,42 @@ const metasAbertas = async () => {
     }
 
     await select({
-        message: "Metas Abertas" + abertas.length,
+        message: "Metas Abertas: " + abertas.length,
         choices: [...abertas]
     })
+}
+
+const deletarMetas = async () => {
+    //.map => vai executar uma função para cada META
+        //sempre vai modificar o array original
+    const metasDesmarcadas = metas.map((meta) => {
+        
+        return {value: meta.value, checked: false}
+    })
+    const itemsADeletar = await checkbox({
+        message:
+          "selecione item para deletar",
+        choices: [...metasDesmarcadas],
+        instructions: false,
+      });
+
+        if(itemsADeletar.length == 0){
+            console.log('Nenhum item para deletar');
+            return;
+            
+        }
+
+        itemsADeletar.forEach((item) => {
+//filter vai retornar um novo array, esse novo array vai entrar nas proprias metas
+//supondo que andar está selecionado ou seja andar é o nosso item(andar[1]) item é == meta? não, pois andar é diferente da meta na posição zero;
+//dps, andar é diferente de andar? não, isso ficara false(não) entt será removido da lista de metas
+//só ficara na lista de metas aquilo q não foi filtrado
+            metas = metas.filter((meta) => {
+                return meta.value != item;
+            })
+        })
+        console.log("Meta(as) deletadas com sucesso!");
+        
 }
 
 const start = async () => {
@@ -143,6 +176,10 @@ const start = async () => {
             name: "Metas abertas",
             value: "abertas",
           },
+          {
+            name: "Deletar metas",
+            value: "deletar",
+          },
         {
           name: "Sair",
           value: "sair",
@@ -163,6 +200,9 @@ const start = async () => {
         break;
         case "abertas":
         await metasAbertas();
+        break;
+        case "deletar":
+        await deletarMetas();
         break;
       case "sair":
         console.log("Até a próxima!!");
