@@ -68,15 +68,15 @@ const listarMetas = async () => {
     instructions: false,
   });
 
+  metas.forEach((m) => {
+    m.checked = false;
+  });
+
   if (respostas.length == 0) {
     console.log("nenhuma meta selecionada");
 
     return;
   }
-
-  metas.forEach((m) => {
-    m.checked = false;
-  });
 
   //ForEach => para cada
   respostas.forEach((resposta) => {
@@ -90,22 +90,21 @@ const listarMetas = async () => {
 };
 
 const metasRealizadas = async () => {
-    //sempre que o execute for verdadeiro...pegara a meta e coloca em uma nova lista
-    const realizadas = metas.filter((meta) => {
-        return meta.checked;
-    });
+  //sempre que o execute for verdadeiro...pegara a meta e coloca em uma nova lista
+  const realizadas = metas.filter((meta) => {
+    return meta.checked;
+  });
 
-    if (realizadas.length == 0) {
-        console.log('Não existem metas realizadas');
-        return;
-    }
-    await select({
-        message: "Metas Realizadas",
-        choices: [...realizadas]
-    })
-    console.log(realizadas);
-    
-}
+  if (realizadas.length == 0) {
+    console.log("Não existem metas realizadas");
+    return;
+  }
+  await select({
+    message: "Metas Realizadas",
+    choices: [...realizadas],
+  });
+  console.log(realizadas);
+};
 
 const start = async () => {
   while (true) {
@@ -121,9 +120,9 @@ const start = async () => {
           value: "listar",
         },
         {
-            name: "Metas realizadas",
-            value: "realizadas",
-          },
+          name: "Metas realizadas",
+          value: "realizadas",
+        },
         {
           name: "Sair",
           value: "sair",
@@ -139,7 +138,7 @@ const start = async () => {
       case "listar":
         await listarMetas();
         break;
-      case "realizadas" :
+      case "realizadas":
         await metasRealizadas();
         break;
       case "sair":
